@@ -10,9 +10,9 @@ namespace VisionTest.Interfaces
     {
         public bool DoesObjectExist();
 
-        public void UploadObject(IImageData image, string remoteFullPath);
+        public void UploadObject(IImageData file, string remoteFullPath);
 
-        public IImageData DownloadObject(IImageData image, string localFullPath);
+        public IImageData DownloadObject(IImageData file, string localFullPath);
 
         public string PublishObject(string remoteFullPath, int expirationTime = 90);
 

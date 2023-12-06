@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VisionTest.Interfaces;
 
-namespace VisionTest
+namespace VisionTest.Datas
 {
     internal class AwsDataObjectImpl : IDataObject
     {
@@ -21,7 +21,7 @@ namespace VisionTest
             throw new NotImplementedException();
         }
 
-        public IImageData DownloadObject(IImageData image, string localFullPath)
+        public IImageData DownloadObject(IImageData file, string localFullPath)
         {
             throw new NotImplementedException();
         }
@@ -36,29 +36,29 @@ namespace VisionTest
             throw new NotImplementedException();
         }
 
-        public void UploadObject(IImageData image, string remoteFullPath)
+        public void UploadObject(IImageData file, string remoteFullPath)
         {
             throw new NotImplementedException();
         }
 
         private bool DoesBucketExit()
-        { 
-            throw new NotImplementedException(); 
+        {
+            throw new NotImplementedException();
         }
 
-        private void CreateBucket() 
-        { 
-            throw new NotImplementedException(); 
+        private void CreateBucket()
+        {
+            throw new NotImplementedException();
         }
 
         private void RemoveBucket()
-        { 
-            throw new NotImplementedException(); 
+        {
+            throw new NotImplementedException();
         }
 
-        public void CreateObject(IImageData image, string remoteFullPath) 
+        public void CreateObject(IImageData image, string remoteFullPath)
         {
-            throw new NotImplementedException(); 
+            throw new NotImplementedException();
         }
     }
 }
