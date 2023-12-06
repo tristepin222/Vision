@@ -11,7 +11,7 @@ new SqlConnector("Data Source=SC-C333-PC01;Initial Catalog=Vision;Integrated Sec
 SqlConnector.sqlConnection.Open();
 
 string imageName = "20230727_140005.jpg";
-GoogleAnalyser analyser = new GoogleAnalyser();
+GoogleLabelDetectorImpl analyser = new GoogleLabelDetectorImpl();
 IImageData img = analyser.Analyse(imageName, 3, 50);
 
 SqlCommand command;
