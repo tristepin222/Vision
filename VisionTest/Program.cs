@@ -2,7 +2,7 @@
 using Google.Api;
 using Google.Cloud.Vision.V1;
 using Microsoft.Data.SqlClient;
-using VisionTest;
+using VisionTest.Analysers;
 using VisionTest.Database;
 using VisionTest.Interfaces;
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using VisionTest.Interfaces;
 using IDataObject = VisionTest.Interfaces.IDataObject;
 
-namespace VisionTest
+namespace VisionTest.Datas
 {
     internal class MySQLDataObjectImpl : IDataObject
     {

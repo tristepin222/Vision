@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Google.Cloud.Vision.V1;
 using VisionTest.Interfaces;
 
-namespace VisionTest
+namespace VisionTest.Datas
 {
     public class GoogleImageData : IImageData
     {

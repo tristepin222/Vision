@@ -1,4 +1,4 @@
-using VisionTest;
+using VisionTest.Analysers;
 using VisionTest.Interfaces;
 
 namespace VisionTestTests
@@ -8,13 +8,13 @@ namespace VisionTestTests
     {
         string imageSource = "20230727_140005.jpg";
         public IImageData img;
-        GoogleAnalyser analyser;
+        GoogleLabelDetectorImpl analyser;
         const int MAX_LABELCOUNT = 3;
 
         [TestInitialize()]
         public void Startup()
         {
-            analyser = new GoogleAnalyser();
+            analyser = new GoogleLabelDetectorImpl();
         }
 
         [TestMethod]
