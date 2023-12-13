@@ -22,12 +22,12 @@ namespace VisionTest.Datas
         {
             this.bucketName = bucketName;
         }
-        public bool DoesObjectExist()
+        public bool DoesObjectExist(string remoteFullPath,)
         {
             throw new NotImplementedException();
         }
 
-        public byte[] DownloadObject(string localFullPath)
+        public byte[] DownloadObject(string remoteFullPath,string localFullPath)
         {
             var storage = StorageClient.Create();
             MemoryStream stream = new MemoryStream();
@@ -52,25 +52,5 @@ namespace VisionTest.Datas
             storage.UploadObject(bucketName, remoteFullPath, null, stream);
         }
 
-        private bool DoesBucketExit()
-        {
-            var storage = StorageClient.Create();
-            return storage.GetBucket(bucketName) != null;
-        }
-
-        private void CreateBucket()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void RemoveBucket()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CreateObject(byte[] file, string remoteFullPath)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
