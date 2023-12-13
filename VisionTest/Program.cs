@@ -1,9 +1,13 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Google.Api;
 using Google.Cloud.Vision.V1;
+using Google.Protobuf;
 using Microsoft.Data.SqlClient;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using VisionTest.Analysers;
 using VisionTest.Database;
+using VisionTest.Datas;
 using VisionTest.Interfaces;
 
 new SqlConnector("Data Source=SC-C333-PC01;Initial Catalog=Vision;Integrated Security=True;Trust Server Certificate=True");
@@ -27,3 +31,27 @@ command.ExecuteNonQuery();
 SqlConnector.sqlConnection.Close();
 
 
+AwsDataObjectImpl awsDataObjectImpl = new AwsDataObjectImpl("csharp.gogle.cld.education");
+awsDataObjectImpl.UploadObject(ObjectToByteArray(img), "wow");
+IImageData image = ByteArrayToObject<IImageData>(awsDataObjectImpl.DownloadObject("wow"));
+
+Console.WriteLine(image.ImageName);
+
+static byte[] ObjectToByteArray(Object obj)
+{
+    BinaryFormatter bf = new BinaryFormatter();
+    using (var ms = new MemoryStream())
+    {
+        bf.Serialize(ms, obj);
+        return ms.ToArray();
+    }
+}
+
+static IImageData ByteArrayToObject<IImageData>(byte[] obj)
+{
+    using (MemoryStream ms = new MemoryStream(obj))
+    {
+        IFormatter br = new BinaryFormatter();
+        return (IImageData)br.Deserialize(ms);
+    }
+}

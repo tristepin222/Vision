@@ -34,7 +34,7 @@ namespace VisionTest.Analysers
                 }
                 index++;
             }
-            return new GoogleImageData(imageString, image, labels.ToArray(), confidences.ToArray());
+            return new GoogleImageData(imageString, labels.ToArray(), confidences.ToArray());
         }
     }
 }
