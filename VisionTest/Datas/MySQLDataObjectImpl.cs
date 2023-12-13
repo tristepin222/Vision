@@ -16,7 +16,7 @@ namespace VisionTest.Datas
             throw new NotImplementedException();
         }
 
-        public IImageData DownloadObject(IImageData image, string localFullPath)
+        public byte[] DownloadObject(string localFullPath)
         {
             throw new NotImplementedException();
         }
@@ -31,7 +31,7 @@ namespace VisionTest.Datas
             throw new NotImplementedException();
         }
 
-        public void UploadObject(IImageData image, string remoteFullPath)
+        public void UploadObject(byte[] image, string remoteFullPath)
         {
             throw new NotImplementedException();
         }
