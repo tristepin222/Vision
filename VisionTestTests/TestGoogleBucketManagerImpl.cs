@@ -10,7 +10,7 @@ namespace TestRiaApiEvaluationModel
     [TestClass]
     public class TestGoogleBucketManagerImpl
     {
-        IDataObject dataObject;
+        IDataObject dataObject = new GoogleDataObjectImpl("");
         static string bucketUri = "csharp.gogle.cld.education";
         static string localFileName = "20230727_140005.jpg";
         string localFile = "20230727_140005.jpg";

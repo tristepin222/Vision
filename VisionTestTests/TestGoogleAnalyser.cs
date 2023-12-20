@@ -1,4 +1,5 @@
 using VisionTest.Analysers;
+using VisionTest.Datas;
 using VisionTest.Interfaces;
 
 namespace VisionTestTests
@@ -9,8 +10,8 @@ namespace VisionTestTests
         string localFile = "20230727_140005.jpg";
         string remoteFileUrl = "20230727_140005.jpg";
         int maxLabels = 3;
-        public IImageData img;
-        GoogleLabelDetectorImpl labelDetector;
+        public IImageData img = new GoogleImageData("", new string[1], new float[1]);
+        GoogleLabelDetectorImpl labelDetector = new GoogleLabelDetectorImpl();
         const int MAX_LABELCOUNT = 3;
 
         [TestInitialize()]
@@ -26,7 +27,7 @@ namespace VisionTestTests
             Assert.IsTrue(File.Exists(localFile));
 
             //when
-            IImageData response =  this.labelDetector.Analyze(localFile);
+            IImageData response = await this.labelDetector.Analyze(localFile);
             //TODO the type of response contains the payload (returned in json by the api)
 
             //then
@@ -43,7 +44,7 @@ namespace VisionTestTests
             //TODO test if the remote file is available
 
             //when
-            IImageData response = this.labelDetector.Analyze(remoteFileUrl);
+            IImageData response = await this.labelDetector.Analyze(remoteFileUrl);
             //TODO the type of response contains the payload (returned in json by the api)
 
             //then
@@ -58,10 +59,9 @@ namespace VisionTestTests
         {
             //given
             //TODO test if the remote file is available
-            int maxLabel = 5;
 
             //when
-            IImageData response =  this.labelDetector.Analyze(remoteFileUrl, maxLabels);
+            IImageData response = await this.labelDetector.Analyze(remoteFileUrl, maxLabels);
             //TODO the type of response contains the payload (returned in json by the api)
 
             //then
@@ -80,7 +80,7 @@ namespace VisionTestTests
             int minConfidenceLevel = 60;
 
             //when
-            IImageData response =  labelDetector.Analyze(remoteFileUrl, minConfidenceLevel);
+            IImageData response = await labelDetector.Analyze(remoteFileUrl, minConfidenceLevel);
             //TODO the type of response contains the payload (returned in json by the api)
 
             //then
@@ -100,7 +100,7 @@ namespace VisionTestTests
             int minConfidenceLevel = 60;
 
             //when
-            IImageData response =  this.labelDetector.Analyze(remoteFileUrl, maxLabels, minConfidenceLevel);
+            IImageData response = await this.labelDetector.Analyze(remoteFileUrl, maxLabels, minConfidenceLevel);
             //TODO the type of response contains the payload (returned in json by the api)
 
             //then

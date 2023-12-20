@@ -11,12 +11,12 @@ namespace VisionTest.Analysers
         {
             client = ImageAnnotatorClient.Create();
         }
-        public IImageData Analyze(string imageString, int labelAmount = 10, int minConfidenceAmount = 90)
+        public async Task<IImageData> Analyze(string imageString, int labelAmount = 10, int minConfidenceAmount = 90)
         {
             List<string> labels = new List<string>();
             List<float> confidences = new List<float>();
             Image image = Image.FromFile(imageString);
-            IReadOnlyList<EntityAnnotation> results = client.DetectLabels(image, maxResults: labelAmount);
+            IReadOnlyList<EntityAnnotation> results = await client.DetectLabelsAsync(image, maxResults: labelAmount);
 
             int index = 0;
             foreach (EntityAnnotation result in results)

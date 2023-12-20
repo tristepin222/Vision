@@ -12,11 +12,11 @@ using VisionTest.Interfaces;
 
 new SqlConnector("Data Source=SC-C333-PC01;Initial Catalog=Vision;Integrated Security=True;Trust Server Certificate=True");
 
-SqlConnector.sqlConnection.Open();
+SqlConnector.sqlConnection?.Open();
 
 string imageName = "20230727_140005.jpg";
 GoogleLabelDetectorImpl analyser = new GoogleLabelDetectorImpl();
-IImageData img = analyser.Analyze(imageName, 3, 50);
+IImageData img = await analyser.Analyze(imageName, 3, 50);
 
 SqlCommand command;
 string query = "INSERT into vision (ImageData,labels,confidences) VALUES (@ImageData,@labels,@confidences)";
@@ -28,10 +28,10 @@ command.Parameters.Add("@labels", System.Data.SqlDbType.VarChar, 1000).Value = i
 command.Parameters.Add("@confidences", System.Data.SqlDbType.VarChar, 1000).Value = img.Confidences.ToString();
 
 command.ExecuteNonQuery();
-SqlConnector.sqlConnection.Close();
+SqlConnector.sqlConnection?.Close();
 
 
 GoogleDataObjectImpl awsDataObjectImpl = new GoogleDataObjectImpl  ("csharp.gogle.cld.education");
-awsDataObjectImpl.Upload(img.ImageName, "wow");
+await awsDataObjectImpl.Upload(img.ImageName, "wow");
 await awsDataObjectImpl.Download("wow", "wwow");
 
