@@ -1,7 +1,5 @@
-using Google.Api;
 using VisionTest.Analysers;
 using VisionTest.Interfaces;
-using static Google.Rpc.Context.AttributeContext.Types;
 
 namespace VisionTestTests
 {

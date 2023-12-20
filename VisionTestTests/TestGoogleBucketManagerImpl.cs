@@ -1,13 +1,5 @@
-﻿using System.IO;
-using System.Runtime.InteropServices.ComTypes;
-using System.Threading.Tasks;
-using Google.Api;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using VisionTest.Analysers;
-using VisionTest.Datas;
+﻿using VisionTest.Datas;
 using VisionTest.Exceptions;
-using VisionTest.Interfaces;
-using static System.Web.Razor.Parser.SyntaxConstants;
 using IDataObject = VisionTest.Interfaces.IDataObject;
 
 namespace TestRiaApiEvaluationModel
