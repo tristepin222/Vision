@@ -16,7 +16,7 @@ namespace VisionTest.Analysers
         {
             client = ImageAnnotatorClient.Create();
         }
-        public IImageData Analyse(string imageString, int labelAmount = 3, int maxConfidenceAmount = 10)
+        public IImageData Analyze(string imageString, int labelAmount = 10, int minConfidenceAmount = 90)
         {
             List<string> labels = new List<string>();
             List<float> confidences = new List<float>();
@@ -27,9 +27,9 @@ namespace VisionTest.Analysers
             foreach (EntityAnnotation result in results)
             {
 
-                if (result.Score >= maxConfidenceAmount || index <= labelAmount)
+                if (result.Score*100 >= minConfidenceAmount && index <= labelAmount)
                 {
-                    confidences.Add(result.Score);
+                    confidences.Add(result.Score * 100);
                     labels.Add(result.Description);
                 }
                 index++;
