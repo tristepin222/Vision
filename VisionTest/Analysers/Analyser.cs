@@ -9,6 +9,6 @@ namespace VisionTest.Analysers
 {
     public interface ILabelDetector
     {
-        public abstract IImageData Analyse(string imageString, int labelAmount = 3, int maxConfidenceAmount = 10);
+        public abstract IImageData Analyze(string imageString, int labelAmount = 10, int minConfidenceAmount = 90);
     }
 }
