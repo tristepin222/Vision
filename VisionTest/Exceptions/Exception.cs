@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VisionTest.Exceptions
 {
-    public class Exception
+    public class Exception <T>
     {
     }
    
