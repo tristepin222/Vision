@@ -16,7 +16,7 @@ SqlConnector.sqlConnection.Open();
 
 string imageName = "20230727_140005.jpg";
 GoogleLabelDetectorImpl analyser = new GoogleLabelDetectorImpl();
-IImageData img = analyser.Analyse(imageName, 3, 50);
+IImageData img = analyser.Analyze(imageName, 3, 50);
 
 SqlCommand command;
 string query = "INSERT into vision (ImageData,labels,confidences) VALUES (@ImageData,@labels,@confidences)";
@@ -31,27 +31,7 @@ command.ExecuteNonQuery();
 SqlConnector.sqlConnection.Close();
 
 
-AwsDataObjectImpl awsDataObjectImpl = new AwsDataObjectImpl("csharp.gogle.cld.education");
-awsDataObjectImpl.UploadObject(ObjectToByteArray(img), "wow");
-IImageData image = ByteArrayToObject<IImageData>(awsDataObjectImpl.DownloadObject("wow"));
+GoogleDataObjectImpl awsDataObjectImpl = new GoogleDataObjectImpl  ("csharp.gogle.cld.education");
+awsDataObjectImpl.Upload(img.ImageName, "wow");
+await awsDataObjectImpl.Download("wow", "wwow");
 
-Console.WriteLine(image.ImageName);
-
-static byte[] ObjectToByteArray(Object obj)
-{
-    BinaryFormatter bf = new BinaryFormatter();
-    using (var ms = new MemoryStream())
-    {
-        bf.Serialize(ms, obj);
-        return ms.ToArray();
-    }
-}
-
-static IImageData ByteArrayToObject<IImageData>(byte[] obj)
-{
-    using (MemoryStream ms = new MemoryStream(obj))
-    {
-        IFormatter br = new BinaryFormatter();
-        return (IImageData)br.Deserialize(ms);
-    }
-}
