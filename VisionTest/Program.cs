@@ -31,7 +31,7 @@ command.ExecuteNonQuery();
 SqlConnector.sqlConnection?.Close();
 
 
-GoogleDataObjectImpl awsDataObjectImpl = new GoogleDataObjectImpl  ("csharp.gogle.cld.education");
+GoogleDataObjectImpl awsDataObjectImpl = new GoogleDataObjectImpl("csharp.gogle.cld.education");
 await awsDataObjectImpl.Upload(img.ImageName, "wow");
 await awsDataObjectImpl.Download("wow", "wwow");
 
