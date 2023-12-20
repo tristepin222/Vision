@@ -11,27 +11,27 @@ namespace VisionTest.Datas
 {
     internal class MySQLDataObjectImpl : IDataObject
     {
-        public bool DoesObjectExist()
+        public Task<bool> DoesExists(string remoteFullPath)
         {
             throw new NotImplementedException();
         }
 
-        public byte[] DownloadObject(string localFullPath)
+        public Task Download(string remoteFullPath, string localFullPath = "")
         {
             throw new NotImplementedException();
         }
 
-        public string PublishObject(string remoteFullPath, int expirationTime = 90)
+        public Task<string> Publish(string remoteFullPath, int expirationTime = 90)
         {
             throw new NotImplementedException();
         }
 
-        public void RemoveObject(string remoteFullPath, bool recursive = false)
+        public Task Remove(string remoteFullPath, bool recursive = false)
         {
             throw new NotImplementedException();
         }
 
-        public void UploadObject(byte[] image, string remoteFullPath)
+        public Task Upload(string image, string remoteFullPath)
         {
             throw new NotImplementedException();
         }
