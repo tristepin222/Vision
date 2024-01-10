@@ -18,7 +18,6 @@ Set up the environment variables with whatever you wish, be careful : if you wan
 
 #### Environment
 
-- Database Engine (mysql, Latest version)
 - IDE (Visual community or Visual Code studio, or anything that can resolve nuget packages and build c# based codes)
 - Package manager (Nuget)
 - OS (windows 10, not tested under other OS)
