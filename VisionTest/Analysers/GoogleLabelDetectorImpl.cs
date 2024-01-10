@@ -17,11 +17,9 @@ namespace VisionTest.Analysers
             List<float> confidences = new List<float>();
             Image image = Image.FromFile(imageString);
             IReadOnlyList<EntityAnnotation> results = await client.DetectLabelsAsync(image, maxResults: labelAmount);
-
             int index = 0;
             foreach (EntityAnnotation result in results)
             {
-
                 if (result.Score*100 >= minConfidenceAmount && index <= labelAmount)
                 {
                     confidences.Add(result.Score * 100);
