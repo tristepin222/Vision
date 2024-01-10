@@ -7,8 +7,8 @@ namespace VisionTestTests
     [TestClass]
     public class TestGoogleAnalyser
     {
-        string localFile = "20230727_140005.jpg";
-        string remoteFileUrl = "20230727_140005.jpg";
+        string localFile = Environment.GetEnvironmentVariable("Image");
+        string remoteFileUrl = Environment.GetEnvironmentVariable("Image");
         int maxLabels = 3;
         public IImageData img = new GoogleImageData("", new string[1], new float[1]);
         GoogleLabelDetectorImpl labelDetector = new GoogleLabelDetectorImpl();

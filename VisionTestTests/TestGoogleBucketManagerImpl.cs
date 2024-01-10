@@ -1,7 +1,7 @@
 ﻿using VisionTest.Datas;
 using VisionTest.Exceptions;
 using IDataObject = VisionTest.Interfaces.IDataObject;
-
+using System.Net;
 namespace TestRiaApiEvaluationModel
 {
     /// <summary>
@@ -11,9 +11,9 @@ namespace TestRiaApiEvaluationModel
     public class TestGoogleBucketManagerImpl
     {
         IDataObject dataObject = new GoogleDataObjectImpl("");
-        static string bucketUri = "csharp.gogle.cld.education";
-        static string localFileName = "20230727_140005.jpg";
-        string localFile = "20230727_140005.jpg";
+        static string bucketUri = Environment.GetEnvironmentVariable("BucketName");
+        static string localFileName = Environment.GetEnvironmentVariable("Image");
+        string localFile = Environment.GetEnvironmentVariable("Image");
         string objectUriWithSubFolder = "";
         string objectUri = localFileName;
         [TestInitialize()]
@@ -87,7 +87,36 @@ namespace TestRiaApiEvaluationModel
             //then
             Assert.IsTrue(await this.dataObject.DoesExists(objectUri));
         }
+        [TestMethod]
+        public async Task Publish_ObjectExists_PublicUrlCreated()
+        {
+            //given
+            await this.dataObject.Upload(localFile, objectUri);
 
+            Assert.IsTrue(await this.dataObject.DoesExists(bucketUri));
+            Assert.IsTrue(File.Exists(localFile));
+
+            //when
+            string presignedUrl = await this.dataObject.Publish(objectUri);
+            //TODO download file using wget or another method that do not need our project library
+
+            WebClient webClient = new WebClient();
+            webClient.DownloadFile(presignedUrl, localFile);
+            //then
+            Assert.IsTrue(File.Exists(localFile));
+        }
+        [TestMethod]
+        public async Task Publish_ObjectMissing_ThrowException()
+        {
+            //given
+            Assert.IsFalse(await this.dataObject.DoesExists(objectUri));
+
+            //when
+            await Assert.ThrowsExceptionAsync<ObjectNotFoundException>(async () => await this.dataObject.Publish(objectUri));
+
+            //then
+            //Exception thrown
+        }
         [TestMethod]
         public async Task Download_ObjectAndLocalPathAvailable_ObjectDownloaded()
         {
