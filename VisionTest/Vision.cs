@@ -1,9 +1,6 @@
 ﻿using Google.Api.Gax;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VisionTest.Analysers;
 using VisionTest.Datas;
 using VisionTest.Interfaces;

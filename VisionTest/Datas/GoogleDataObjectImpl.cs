@@ -1,11 +1,8 @@
 ﻿using Google.Cloud.Storage.V1;
 using VisionTest.Interfaces;
 using Object = Google.Apis.Storage.v1.Data.Object;
-
 using VisionTest.Exceptions;
 using Google.Apis.Auth.OAuth2;
-using System.Security.AccessControl;
-using Microsoft.Identity.Client.Extensions.Msal;
 
 namespace VisionTest.Datas
 {
