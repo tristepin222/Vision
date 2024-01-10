@@ -10,7 +10,7 @@ namespace VisionTest.Datas
             string currentQuery = "";
             string query = "INSERT into Image (Path) VALUES (@imageString)";
 
-            currentQuery = query.Replace(p.ParameterName, p.Value.ToString());
+            currentQuery = query.Replace("imageString", img.ImageName.ToString());
 
             queries.Add(currentQuery);
 
