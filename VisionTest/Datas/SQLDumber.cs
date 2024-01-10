@@ -1,5 +1,4 @@
-﻿using MySql.Data.MySqlClient;
-using VisionTest.Interfaces;
+﻿using VisionTest.Interfaces;
 
 namespace VisionTest.Datas
 {
@@ -7,31 +6,13 @@ namespace VisionTest.Datas
     {
         public static void Dumb(IImageData img)
         {
-
-            MySqlConnection conn;
-
-            conn = new MySqlConnection();
-            conn.ConnectionString = Environment.GetEnvironmentVariable("DataBaseConnection");
-
-            conn.Open();
-
             List<string> queries = new List<string>();
             string currentQuery = "";
-            MySqlCommand command;
             string query = "INSERT into Image (Path) VALUES (@imageString)";
 
-            command = new MySqlCommand(query);
-            command.Connection = conn;
+            currentQuery = query.Replace(p.ParameterName, p.Value.ToString());
 
-            command.Parameters.Add("@imageString", MySqlDbType.VarChar, 45).Value = img.ImageName;
-
-            foreach (MySqlParameter p in command.Parameters)
-            {
-                currentQuery = query.Replace(p.ParameterName, p.Value.ToString());
-            }
             queries.Add(currentQuery);
-            command.ExecuteNonQuery();
-            int id = (int)command.LastInsertedId;
 
             query = "INSERT into Labels (Name, Confidence, Image_idImage) VALUES (@Name, @confidence, @idImage)";
 
@@ -41,13 +22,11 @@ namespace VisionTest.Datas
                 currentQuery = query;
                 currentQuery = currentQuery.Replace("@Name", image);
                 currentQuery = currentQuery.Replace("@confidence", img.Confidences[index].ToString());
-                currentQuery = currentQuery.Replace("@idImage", id.ToString());
+                currentQuery = currentQuery.Replace("@idImage", 21.ToString());
                 queries.Add(currentQuery);
-                command.ExecuteNonQuery();
 
                 index++;
             }
-            conn.Close();
             File.WriteAllLines("query", queries);
         }
     }
