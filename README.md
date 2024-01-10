@@ -30,7 +30,11 @@ Set up the environment variables with whatever you wish, be careful : if you wan
 - Google.Cloud.Vision.V1 3.3.0
 - MySql.Data 8.2.0 (for DB connection, SQL requests)
 
-### Configuration
+### Application configuration
+
+Visual studio community, should automatically download all dependencies, if not just run `nuget update`
+
+### Database configuration
 
 just run the Create_database.sql under the sql folder
 
