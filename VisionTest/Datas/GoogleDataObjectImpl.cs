@@ -3,6 +3,9 @@ using VisionTest.Interfaces;
 using Object = Google.Apis.Storage.v1.Data.Object;
 
 using VisionTest.Exceptions;
+using Google.Apis.Auth.OAuth2;
+using System.Security.AccessControl;
+using Microsoft.Identity.Client.Extensions.Msal;
 
 namespace VisionTest.Datas
 {
@@ -45,12 +48,27 @@ namespace VisionTest.Datas
                 Object file = await storage.DownloadObjectAsync(bucketName, remoteFullPath, stream);
                 File.WriteAllBytes(localFullPath, stream.GetBuffer());
             }
-            throw new ObjectNotFoundException();
+            else
+            {
+                throw new ObjectNotFoundException();
+            }
         }
 
-        public Task<string> Publish(string remoteFullPath, int expirationTime = 90)
+        public async Task<string> Publish(string remoteFullPath, int expirationTime = 90)
         {
-            throw new NotImplementedException();
+            if (await DoesExists(remoteFullPath))
+            {
+
+
+                UrlSigner urlSigner = UrlSigner.FromCredential(await GoogleCredential.GetApplicationDefaultAsync());
+                // V4 is the default signing version.
+                string url = await urlSigner.SignAsync(bucketName, remoteFullPath, TimeSpan.FromHours(expirationTime), HttpMethod.Get);
+                return url;
+            }
+            else
+            {
+                throw new ObjectNotFoundException();
+            }
         }
 
         public async Task Remove(string remoteFullPath, bool recursive = false)
