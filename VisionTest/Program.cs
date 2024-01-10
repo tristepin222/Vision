@@ -1,37 +1,58 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using Google.Api;
-using Google.Cloud.Vision.V1;
-using Google.Protobuf;
-using Microsoft.Data.SqlClient;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
+using MySql.Data.MySqlClient;
 using VisionTest.Analysers;
-using VisionTest.Database;
 using VisionTest.Datas;
 using VisionTest.Interfaces;
 
-new SqlConnector("Data Source=SC-C333-PC01;Initial Catalog=Vision;Integrated Security=True;Trust Server Certificate=True");
 
-SqlConnector.sqlConnection?.Open();
 
 string imageName = "20230727_140005.jpg";
 GoogleLabelDetectorImpl analyser = new GoogleLabelDetectorImpl();
 IImageData img = await analyser.Analyze(imageName, 3, 50);
 
-SqlCommand command;
-string query = "INSERT into vision (ImageData,labels,confidences) VALUES (@ImageData,@labels,@confidences)";
-command = new SqlCommand(query);
-command.Connection = SqlConnector.sqlConnection;
 
-command.Parameters.Add("@ImageData", System.Data.SqlDbType.VarChar, 500).Value = img.ImageName;
-command.Parameters.Add("@labels", System.Data.SqlDbType.VarChar, 1000).Value = img.Labels.ToString();
-command.Parameters.Add("@confidences", System.Data.SqlDbType.VarChar, 1000).Value = img.Confidences.ToString();
+MySqlConnection conn;
 
+conn = new MySqlConnection();
+conn.ConnectionString = Environment.GetEnvironmentVariable("DataBaseConnection");
+
+conn.Open();
+
+List<string> queries = new List<string>();
+string currentQuery = "";
+MySqlCommand command;
+string query = "INSERT into Image (Path) VALUES (@imageString)";
+
+command = new MySqlCommand(query);
+command.Connection = conn;
+
+command.Parameters.Add("@imageString", MySqlDbType.VarChar, 45).Value = img.ImageName;
+
+foreach (MySqlParameter p in command.Parameters)
+{
+    currentQuery = query.Replace(p.ParameterName, p.Value.ToString());
+}
+queries.Add(currentQuery);
 command.ExecuteNonQuery();
-SqlConnector.sqlConnection?.Close();
+int id = (int)command.LastInsertedId;
 
+query = "INSERT into Labels (Name, Confidence, Image_idImage) VALUES (@Name, @confidence, @idImage)";
 
-GoogleDataObjectImpl awsDataObjectImpl = new GoogleDataObjectImpl("csharp.gogle.cld.education");
-await awsDataObjectImpl.Upload(img.ImageName, "wow");
-await awsDataObjectImpl.Download("wow", "wwow");
+int index = 0;
+foreach(string image in img.Labels) 
+{
+    currentQuery = query;
+    currentQuery = currentQuery.Replace("@Name", image);
+    currentQuery = currentQuery.Replace("@confidence", img.Confidences[index].ToString());
+    currentQuery = currentQuery.Replace("@idImage", id.ToString());
+    queries.Add(currentQuery);
+    command.ExecuteNonQuery();
+
+    index++;
+}
+conn.Close();
+File.WriteAllLines("query", queries);
+
+GoogleDataObjectImpl awsDataObjectImpl = new GoogleDataObjectImpl(Environment.GetEnvironmentVariable("BucketName"));
+await awsDataObjectImpl.Upload("query", "query");
 
