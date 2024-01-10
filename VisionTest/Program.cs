@@ -1,17 +1,16 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using Google.Api;
-using Google.Cloud.Vision.V1;
+using VisionTest;
 
 
-Console.WriteLine("Hello, World!");
 
-Image image1 = Image.FromFile("Nigiri_Sushi_(26478725732).jpg");
+Vision vision = new Vision();
 
-ImageAnnotatorClient client = ImageAnnotatorClient.Create();
 
-IReadOnlyList<EntityAnnotation> result = client.DetectLabels(image1);
+vision.Call();
 
-foreach (EntityAnnotation face in result)
-{
-    Console.WriteLine($"Confidence: {(int)(face.Score * 100)}%");
-}
+await vision.Publish(Environment.GetEnvironmentVariable("Image"));
+
+await vision.Analyze(Environment.GetEnvironmentVariable("Image"));
+
+vision.Upload("query", "query");
+
